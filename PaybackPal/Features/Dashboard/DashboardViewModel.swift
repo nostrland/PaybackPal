@@ -4,25 +4,19 @@ import Combine
 
 @MainActor
 final class DashboardViewModel: ObservableObject {
-    // Dependencies
+
+    // MARK: - Dependencies
+
     let repository: PaymentsRepository
     let reminderScheduler: ReminderScheduler
 
-    // View state
+    // MARK: - View State
+
     @Published private(set) var debtData: DebtData
-
-    // Expose reminder state for the View
-    var hasNotificationPermission: Bool {
-        reminderScheduler.hasPermission
-    }
-
-    var remindersScheduled: Bool {
-        reminderScheduler.remindersScheduled
-    }
 
     private var cancellables = Set<AnyCancellable>()
 
-    // MARK: - Derived UI values
+    // MARK: - Derived UI State
 
     var currentBalance: Decimal {
         debtData.currentBalance
@@ -46,6 +40,15 @@ final class DashboardViewModel: ObservableObject {
         )
     }
 
+    // Reminder UI state exposed cleanly to the View
+    var hasNotificationPermission: Bool {
+        reminderScheduler.hasPermission
+    }
+
+    var remindersScheduled: Bool {
+        reminderScheduler.remindersScheduled
+    }
+
     // MARK: - Init
 
     init(
@@ -63,9 +66,12 @@ final class DashboardViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        // Optional: If you find reminder status is not updating in the UI,
-        // we can also subscribe to reminderScheduler publisher changes and
-        // trigger objectWillChange, but start simple first.
+        // Forward ReminderScheduler changes so the Dashboard UI refreshes
+        reminderScheduler.objectWillChange
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
     }
 
     // MARK: - Payments

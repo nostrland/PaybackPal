@@ -20,7 +20,7 @@ struct DashboardView: View {
                             .foregroundColor(.primary)
 
                         if let payoffDate = viewModel.estimatedPayoffDate {
-                            Text("Estimated payoff: \(formatDate(payoffDate))")
+                            Text("Estimated payoff: \(formatPayoffDate(payoffDate))")
                                 .font(DesignSystem.Typography.caption)
                                 .foregroundColor(.secondary)
                                 .padding(.top, DesignSystem.Spacing.sm)
@@ -191,13 +191,28 @@ struct DashboardView: View {
                 }
             }
             .navigationTitle("PaybackPal")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        PaymentHistoryView(
+                            payments: viewModel.recentPayments,
+                            onDelete: { payment in
+                                viewModel.deletePayment(payment)
+                            }
+                        )
+                    } label: {
+                        Label("History", systemImage: "clock")
+                            .foregroundColor(DesignSystem.Colors.primary)
+                    }
+                }
+            }
             .sheet(isPresented: $showPaymentEntry) {
                 PaymentEntryView(repository: viewModel.repository)
             }
         }
     }
 
-    private func formatDate(_ date: Date) -> String {
+    private func formatPayoffDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
