@@ -197,6 +197,17 @@ struct DashboardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
+                        // Estimated payoff based on average of recent payments
+                        if let estimate = computePayoffEstimateDate(
+                            balance: viewModel.currentBalance,
+                            payments: viewModel.recentPayments
+                        ) {
+                            Text("Estimated payoff: \(formatPayoffDate(estimate))")
+                                .font(DesignSystem.Typography.caption)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal, DesignSystem.Spacing.lg)
+                        }
+
                         if viewModel.recentPayments.isEmpty {
                             Text("No payments yet")
                                 .font(DesignSystem.Typography.caption)
@@ -291,6 +302,47 @@ struct DashboardView: View {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter.string(from: date)
+    }
+
+    private func computePayoffEstimateDate(balance: Decimal, payments: [Payment]) -> Date? {
+        // Need at least one positive payment and a positive balance
+        guard balance > 0, !payments.isEmpty else { return nil }
+
+        // Sort payments by date ascending
+        let sorted = payments.sorted { $0.date < $1.date }
+
+        // Average payment amount (consider only positive amounts)
+        let amounts = sorted.map { max($0.amount, 0) }
+        let total = amounts.reduce(Decimal(0), +)
+        let count = Decimal(amounts.count)
+        guard count > 0 else { return nil }
+        let avgPayment = total / count
+        guard avgPayment > 0 else { return nil }
+
+        // Average interval in days between payments; default to 14 days if not enough data
+        let avgIntervalDays: Double
+        if sorted.count >= 2 {
+            var intervals: [TimeInterval] = []
+            for i in 1..<sorted.count {
+                intervals.append(sorted[i].date.timeIntervalSince(sorted[i - 1].date))
+            }
+            let avgInterval = intervals.reduce(0, +) / Double(intervals.count)
+            // Convert seconds to days, ensure at least 1 day to avoid zero/negative
+            avgIntervalDays = max(avgInterval / 86_400.0, 1.0)
+        } else {
+            avgIntervalDays = 14.0
+        }
+
+        // Compute number of periods needed (ceil to whole periods)
+        let remaining = NSDecimalNumber(decimal: balance).doubleValue
+        let avgPay = NSDecimalNumber(decimal: avgPayment).doubleValue
+        guard avgPay > 0 else { return nil }
+        let periodsNeeded = ceil(remaining / avgPay)
+
+        // Base date: last payment date if available, else today
+        let baseDate = sorted.last?.date ?? Date()
+        let daysToAdd = periodsNeeded * avgIntervalDays
+        return Calendar.current.date(byAdding: .day, value: Int(daysToAdd), to: baseDate)
     }
 }
 
