@@ -42,7 +42,7 @@ struct PaymentHistoryView: View {
                                 .font(DesignSystem.Typography.body)
                                 .fontWeight(.semibold)
                             if let payoffEstimate {
-                                Text("Estimated payoff: \(formatPayoffDate(payoffEstimate))")
+                                Text("Average payoff date from recent payments: \(formatPayoffDate(payoffEstimate))")
                                     .font(DesignSystem.Typography.caption)
                                     .foregroundColor(.secondary)
                             }

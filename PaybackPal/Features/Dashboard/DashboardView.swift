@@ -131,16 +131,6 @@ struct DashboardView: View {
                                     .foregroundColor(.secondary)
                                     .padding(.horizontal, DesignSystem.Spacing.lg)
                             }
-                            
-                            if let estimate = computePayoffEstimateDate(
-                                balance: viewModel.currentBalance,
-                                payments: viewModel.recentPayments
-                            ) {
-                                Text("Estimated payoff: \(formatPayoffDate(estimate))")
-                                    .font(DesignSystem.Typography.caption)
-                                    .foregroundColor(.secondary)
-                                    .padding(.horizontal, DesignSystem.Spacing.lg)
-                            }
                         }
                     }
 
