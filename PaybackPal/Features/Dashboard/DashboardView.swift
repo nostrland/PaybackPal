@@ -5,6 +5,8 @@ struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
     @State private var showPaymentEntry = false
     @State private var lastDeletedPayment: Payment? = nil
+    @State private var showUndoBanner = false
+    @State private var undoHideWorkItem: DispatchWorkItem? = nil
 
     var body: some View {
         NavigationStack {
@@ -204,6 +206,8 @@ struct DashboardView: View {
                             ForEach(viewModel.recentPayments) { payment in
                                 PaymentRowView(payment: payment) {
                                     lastDeletedPayment = payment
+                                    showUndoBanner = true
+                                    scheduleUndoAutoHide()
                                     viewModel.deletePayment(payment)
                                 }
                             }
@@ -221,6 +225,8 @@ struct DashboardView: View {
                             payments: viewModel.recentPayments,
                             onDelete: { payment in
                                 lastDeletedPayment = payment
+                                showUndoBanner = true
+                                scheduleUndoAutoHide()
                                 viewModel.deletePayment(payment)
                             }
                         )
@@ -229,28 +235,56 @@ struct DashboardView: View {
                             .foregroundColor(DesignSystem.Colors.primary)
                     }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    if let last = lastDeletedPayment {
+            }
+            .sheet(isPresented: $showPaymentEntry) {
+                PaymentEntryView(repository: viewModel.repository)
+            }
+            .overlay(alignment: .bottom) {
+                if showUndoBanner, let last = lastDeletedPayment {
+                    HStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Payment deleted")
+                            .font(DesignSystem.Typography.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
                         Button {
                             // Re-add the last deleted amount as a new payment
                             viewModel.addQuickPayment(last.amount)
                             lastDeletedPayment = nil
+                            showUndoBanner = false
+                            undoHideWorkItem?.cancel()
+                            undoHideWorkItem = nil
                         } label: {
-                            Label("Undo", systemImage: "arrow.uturn.backward")
+                            Text("Undo")
+                                .font(.headline)
                                 .foregroundColor(DesignSystem.Colors.primary)
                         }
-                        .accessibilityLabel("Undo last delete")
                     }
+                    .padding(.horizontal, DesignSystem.Spacing.lg)
+                    .padding(.vertical, DesignSystem.Spacing.md)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(12)
+                    .padding(.horizontal, DesignSystem.Spacing.lg)
+                    .padding(.bottom, DesignSystem.Spacing.lg)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-            }
-            .sheet(isPresented: $showPaymentEntry) {
-                PaymentEntryView(repository: viewModel.repository)
             }
         }
         .preferredColorScheme(.dark)
     }
 
     // MARK: - Helpers
+
+    private func scheduleUndoAutoHide() {
+        undoHideWorkItem?.cancel()
+        let work = DispatchWorkItem {
+            withAnimation {
+                showUndoBanner = false
+            }
+            lastDeletedPayment = nil
+        }
+        undoHideWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: work)
+    }
 
     private func formatPayoffDate(_ date: Date) -> String {
         let formatter = DateFormatter()
@@ -316,3 +350,4 @@ struct PaymentRowView: View {
         return formatter.string(from: date)
     }
 }
+
