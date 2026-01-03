@@ -16,6 +16,8 @@ struct PaymentHistoryView: View {
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Payment History")
                             .font(DesignSystem.Typography.title)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
                             .padding(.top, DesignSystem.Spacing.lg)
@@ -37,6 +39,8 @@ struct PaymentHistoryView: View {
                         VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
                             Text(filter == .all ? "Total Paid" : "Total Paid (This Month)")
                                 .font(DesignSystem.Typography.caption)
+                                .textCase(.uppercase)
+                                .tracking(0.5)
                                 .foregroundColor(.secondary)
                             Text(CurrencyFormatter.shared.string(from: totalPaid))
                                 .font(DesignSystem.Typography.body)
@@ -62,6 +66,7 @@ struct PaymentHistoryView: View {
                             AxisMarks(position: .leading)
                         }
                         .frame(height: 140)
+                        .animation(.easeInOut(duration: 0.35), value: monthlyTotalsForChart)
                     }
                     .headerProminence(.increased)
 
@@ -74,6 +79,8 @@ struct PaymentHistoryView: View {
                     ForEach(sortedSectionKeys, id: \.self) { key in
                         Section(header: Text(key)
                             .font(DesignSystem.Typography.caption)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .foregroundColor(.secondary),
                                 footer: monthlyFooter(for: key)) {
                             let items = sections[key] ?? []
@@ -98,6 +105,7 @@ struct PaymentHistoryView: View {
                     }
                 }
                 .listStyle(.insetGrouped)
+                .animation(.spring(response: 0.35, dampingFraction: 0.9), value: payments)
             }
         }
         .navigationTitle("Payment History")
@@ -180,11 +188,15 @@ struct PaymentHistoryView: View {
 
     // MARK: - Chart Data
 
-    private struct MonthlyTotal: Identifiable {
+    private struct MonthlyTotal: Identifiable, Equatable {
         let id = UUID()
         let date: Date
         let label: String
         let total: Decimal
+
+        static func == (lhs: MonthlyTotal, rhs: MonthlyTotal) -> Bool {
+            lhs.date == rhs.date && lhs.label == rhs.label && lhs.total == rhs.total
+        }
     }
 
     private var monthlyTotalsForChart: [MonthlyTotal] {

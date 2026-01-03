@@ -6,6 +6,7 @@ import Foundation
 /// restrained gradients, and tasteful depth.
 struct AppIconView: View {
     var size: CGFloat = 256
+    var flatStyle: Bool = false
 
     var body: some View {
         ZStack {
@@ -19,27 +20,32 @@ struct AppIconView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color.red.opacity(0.55), Color.red.opacity(0.2), .clear],
+                        colors: flatStyle ? [Color.red.opacity(0.25), Color.red.opacity(0.1), .clear]
+                                          : [Color.red.opacity(0.55), Color.red.opacity(0.2), .clear],
                         center: .center,
                         startRadius: size * 0.05,
                         endRadius: size * 0.55
                     )
                 )
-                .blur(size * 0.06)
-                .scaleEffect(0.9)
+                .blur(flatStyle ? size * 0.03 : size * 0.06)
+                .scaleEffect(flatStyle ? 0.95 : 0.9)
 
             // Sai symbol
             SaiSymbol()
                 .frame(width: size * 0.55, height: size * 0.65)
                 .foregroundStyle(metalGradient)
-                .shadow(color: .black.opacity(0.35), radius: size * 0.03, x: 0, y: size * 0.02)
-                .shadow(color: .red.opacity(0.25), radius: size * 0.05, x: 0, y: 0)
+                .shadow(color: .black.opacity(flatStyle ? 0.25 : 0.35), radius: size * 0.03, x: 0, y: size * 0.02)
+                .shadow(color: .red.opacity(flatStyle ? 0.15 : 0.25), radius: size * 0.05, x: 0, y: 0)
                 .overlay(
-                    SaiSymbol()
-                        .frame(width: size * 0.55, height: size * 0.65)
-                        .foregroundStyle(rimLightGradient)
-                        .blendMode(.screen)
-                        .opacity(0.5)
+                    Group {
+                        if !flatStyle {
+                            SaiSymbol()
+                                .frame(width: size * 0.55, height: size * 0.65)
+                                .foregroundStyle(rimLightGradient)
+                                .blendMode(.screen)
+                                .opacity(0.5)
+                        }
+                    }
                 )
         }
         .frame(width: size, height: size)
@@ -71,7 +77,8 @@ struct AppIconView: View {
         RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous)
             .strokeBorder(
                 LinearGradient(
-                    colors: [Color.white.opacity(0.25), Color.white.opacity(0.05)],
+                    colors: flatStyle ? [Color.white.opacity(0.15), Color.white.opacity(0.03)]
+                                      : [Color.white.opacity(0.25), Color.white.opacity(0.05)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ),
@@ -183,6 +190,10 @@ struct AppIconView_Previews: PreviewProvider {
                 .padding()
                 .background(Color.black)
                 .previewDisplayName("Icon 64")
+            AppIconView(size: 256, flatStyle: true)
+                .padding()
+                .background(Color.black)
+                .previewDisplayName("Icon 256 (Flat)")
         }
     }
 }

@@ -1,5 +1,6 @@
 import SwiftUI
 import Foundation
+import UIKit
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
@@ -7,6 +8,8 @@ struct DashboardView: View {
     @State private var lastDeletedPayment: Payment? = nil
     @State private var showUndoBanner = false
     @State private var undoHideWorkItem: DispatchWorkItem? = nil
+    @State private var isSharing = false
+    @State private var shareItems: [Any] = []
 
     var body: some View {
         NavigationStack {
@@ -16,38 +19,50 @@ struct DashboardView: View {
                     // MARK: - Balance Section
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Owed Balance")
-                            .font(DesignSystem.Typography.body)
+                            .font(DesignSystem.Typography.caption)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .foregroundColor(.secondary)
 
                         Text(CurrencyFormatter.shared.string(from: viewModel.currentBalance))
                             .font(DesignSystem.Typography.largeBalance)
+                            .fontWeight(.semibold)
                             .foregroundColor(.primary)
                     }
                     .padding(.top, DesignSystem.Spacing.xl)
+                    .contextMenu {
+                        Button {
+                            exportAudit()
+                        } label: {
+                            Label("Export Audit Log", systemImage: "square.and.arrow.up")
+                        }
+                    }
 
                     // MARK: - Quick Payment Buttons
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Quick Payment")
                             .font(DesignSystem.Typography.title)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
                         HStack(spacing: DesignSystem.Spacing.md) {
                             QuickPaymentButton(amount: 20) {
-                                viewModel.addQuickPayment(20)
+                                withAnimation { viewModel.addQuickPayment(20) }
                             }
                             QuickPaymentButton(amount: 50) {
-                                viewModel.addQuickPayment(50)
+                                withAnimation { viewModel.addQuickPayment(50) }
                             }
                         }
                         .padding(.horizontal, DesignSystem.Spacing.lg)
 
                         HStack(spacing: DesignSystem.Spacing.md) {
                             QuickPaymentButton(amount: 100) {
-                                viewModel.addQuickPayment(100)
+                                withAnimation { viewModel.addQuickPayment(100) }
                             }
                             QuickPaymentButton(amount: 200) {
-                                viewModel.addQuickPayment(200)
+                                withAnimation { viewModel.addQuickPayment(200) }
                             }
                         }
                         .padding(.horizontal, DesignSystem.Spacing.lg)
@@ -70,6 +85,8 @@ struct DashboardView: View {
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Payment amount")
                             .font(DesignSystem.Typography.title)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
@@ -118,11 +135,15 @@ struct DashboardView: View {
                                     .font(DesignSystem.Typography.caption)
                                     .foregroundColor(.secondary)
                                     .padding(.horizontal, DesignSystem.Spacing.lg)
+                                    .transition(.opacity)
+                                    .animation(.default, value: viewModel.debtData.paycheckPaymentAmount)
                             } else {
                                 Text("Bump this up to finish sooner")
                                     .font(DesignSystem.Typography.caption)
                                     .foregroundColor(.secondary)
                                     .padding(.horizontal, DesignSystem.Spacing.lg)
+                                    .transition(.opacity)
+                                    .animation(.default, value: viewModel.debtData.paycheckPaymentAmount)
                             }
                         }
                     }
@@ -131,6 +152,8 @@ struct DashboardView: View {
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Reminders")
                             .font(DesignSystem.Typography.title)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
@@ -187,6 +210,8 @@ struct DashboardView: View {
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Recent Payments")
                             .font(DesignSystem.Typography.title)
+                            .textCase(.uppercase)
+                            .tracking(0.5)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
@@ -201,10 +226,12 @@ struct DashboardView: View {
                                     lastDeletedPayment = payment
                                     showUndoBanner = true
                                     scheduleUndoAutoHide()
-                                    viewModel.deletePayment(payment)
+                                    withAnimation { viewModel.deletePayment(payment) }
                                 }
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
                             }
                             .padding(.horizontal, DesignSystem.Spacing.lg)
+                            .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.recentPayments)
                         }
                     }
                     .padding(.bottom, DesignSystem.Spacing.xl)
@@ -224,17 +251,21 @@ struct DashboardView: View {
                                 lastDeletedPayment = payment
                                 showUndoBanner = true
                                 scheduleUndoAutoHide()
-                                viewModel.deletePayment(payment)
+                                withAnimation { viewModel.deletePayment(payment) }
                             }
                         )
                     } label: {
                         Label("History", systemImage: "clock")
+                            .symbolRenderingMode(.hierarchical)
                             .foregroundColor(DesignSystem.Colors.primary)
                     }
                 }
             }
             .sheet(isPresented: $showPaymentEntry) {
                 PaymentEntryView(repository: viewModel.repository)
+            }
+            .sheet(isPresented: $isSharing) {
+                ShareSheet(activityItems: shareItems)
             }
             .overlay(alignment: .bottom) {
                 if showUndoBanner, let last = lastDeletedPayment {
@@ -244,8 +275,7 @@ struct DashboardView: View {
                             .foregroundColor(.secondary)
                         Spacer()
                         Button {
-                            // Re-add the last deleted amount as a new payment
-                            viewModel.addQuickPayment(last.amount)
+                            withAnimation { viewModel.addQuickPayment(last.amount) }
                             lastDeletedPayment = nil
                             showUndoBanner = false
                             undoHideWorkItem?.cancel()
@@ -336,6 +366,33 @@ struct DashboardView: View {
         let daysToAdd = periodsNeeded * avgIntervalDays
         return Calendar.current.date(byAdding: .day, value: Int(daysToAdd), to: baseDate)
     }
+
+    private func exportAudit() {
+        let events = viewModel.repository.debtData.events
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.dateEncodingStrategy = .iso8601
+        do {
+            let data = try encoder.encode(events)
+            let filename = "Activity_\(Date().ISO8601Format()).json"
+            let url = temporaryFileURL(fileName: filename)
+            try data.write(to: url, options: .atomic)
+            shareItems = [url]
+            isSharing = true
+        } catch {
+            let fallback = events.map { event in
+                let msg = event.message ?? event.kind.rawValue
+                return "\(event.date): \(msg)"
+            }.joined(separator: "\n")
+            shareItems = [fallback]
+            isSharing = true
+        }
+    }
+
+    private func temporaryFileURL(fileName: String) -> URL {
+        let directory = FileManager.default.temporaryDirectory
+        return directory.appendingPathComponent(fileName)
+    }
 }
 
 // MARK: - Subviews
@@ -393,5 +450,16 @@ struct PaymentRowView: View {
         formatter.timeStyle = .short
         return formatter.string(from: date)
     }
+}
+
+// MARK: - Share Sheet Wrapper
+private struct ShareSheet: UIViewControllerRepresentable {
+    let activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 

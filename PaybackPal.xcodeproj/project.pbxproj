@@ -19,6 +19,7 @@
 		AA0000130000000000000001 /* DateHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000140000000000000001 /* DateHelpers.swift */; };
 		AA0000150000000000000001 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0000160000000000000001 /* DesignSystem.swift */; };
 		C913B9FA2F08972900E11C98 /* PaymentHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C913B9F92F08972900E11C98 /* PaymentHistoryView.swift */; };
+		C9801B802F09C36300EFDE3E /* AuditEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9801B7F2F09C36300EFDE3E /* AuditEvent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,9 @@
 		AA0000180000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA0000190000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C913B9F92F08972900E11C98 /* PaymentHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoryView.swift; sourceTree = "<group>"; };
+		C9801B7D2F09C21400EFDE3E /* AuditEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditEvent.swift; sourceTree = "<group>"; };
+		C9801B7E2F09C22600EFDE3E /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		C9801B7F2F09C36300EFDE3E /* AuditEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditEvent.swift; sourceTree = "<group>"; };
 		C9DB78942F09AF3B008AEB41 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +61,8 @@
 				AA00001C0000000000000001 /* PaybackPal */,
 				AA00001D0000000000000001 /* Products */,
 				C9DB78942F09AF3B008AEB41 /* AppIconView.swift */,
+				C9801B7D2F09C21400EFDE3E /* AuditEvent.swift */,
+				C9801B7E2F09C22600EFDE3E /* ActivityView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,6 +112,7 @@
 			children = (
 				AA00000C0000000000000001 /* Payment.swift */,
 				AA00000E0000000000000001 /* DebtData.swift */,
+				C9801B7F2F09C36300EFDE3E /* AuditEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -234,6 +241,7 @@
 				AA00000D0000000000000001 /* DebtData.swift in Sources */,
 				AA00000F0000000000000001 /* PaymentsRepository.swift in Sources */,
 				AA0000110000000000000001 /* CurrencyFormatter.swift in Sources */,
+				C9801B802F09C36300EFDE3E /* AuditEvent.swift in Sources */,
 				AA0000130000000000000001 /* DateHelpers.swift in Sources */,
 				AA0000150000000000000001 /* DesignSystem.swift in Sources */,
 			);

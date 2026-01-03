@@ -1,6 +1,6 @@
 import Foundation
 
-struct Payment: Identifiable, Codable {
+struct Payment: Identifiable, Codable, Equatable {
     let id: UUID
     let amount: Decimal
     let date: Date
@@ -13,5 +13,9 @@ struct Payment: Identifiable, Codable {
         self.id = id
         self.amount = max(Decimal(0), amount)
         self.date = date
+    }
+
+    static func == (lhs: Payment, rhs: Payment) -> Bool {
+        lhs.id == rhs.id && lhs.amount == rhs.amount && lhs.date == rhs.date
     }
 }
