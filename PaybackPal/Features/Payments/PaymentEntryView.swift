@@ -65,7 +65,10 @@ struct PaymentEntryView: View {
             .replacingOccurrences(of: "$", with: "")
             .replacingOccurrences(of: ",", with: "")
 
-        return Decimal(string: cleaned) ?? 0
+        let amount = Decimal(string: cleaned) ?? 0
+        // Cap at reasonable maximum to prevent overflow and UI issues
+        let maxAmount = Decimal(999_999_999)
+        return min(max(amount, 0), maxAmount)
     }
 
     private func savePayment() {

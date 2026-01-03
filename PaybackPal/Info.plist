@@ -11,6 +11,8 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>PaybackPal sends payment reminders on your biweekly payday schedule to help you stay on track with debt repayment.</string>
 </dict>
 </plist>
 

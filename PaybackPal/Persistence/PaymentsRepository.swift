@@ -1,5 +1,18 @@
 import Foundation
 
+/// Repository for managing debt and payment data.
+///
+/// **Security Note:**
+/// Currently stores data in UserDefaults without encryption. For production apps
+/// handling sensitive financial data, consider:
+/// - Using Keychain for encrypted storage (Security framework)
+/// - Implementing Data Protection classes (FileProtectionType)
+/// - Encrypting data before storage using CryptoKit
+///
+/// UserDefaults data is:
+/// - Backed up to iCloud/iTunes (potential exposure)
+/// - Readable on jailbroken devices
+/// - Not protected by default encryption
 final class PaymentsRepository: ObservableObject {
     static let shared = PaymentsRepository()
     

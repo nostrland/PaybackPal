@@ -10,6 +10,7 @@ struct DashboardView: View {
     @State private var undoHideWorkItem: DispatchWorkItem? = nil
     @State private var isSharing = false
     @State private var shareItems: [Any] = []
+    @State private var tempFileURL: URL? = nil
 
     var body: some View {
         NavigationStack {
@@ -267,6 +268,13 @@ struct DashboardView: View {
             .sheet(isPresented: $isSharing) {
                 ShareSheet(activityItems: shareItems)
             }
+            .onChange(of: isSharing) { _, newValue in
+                // Clean up temp file when share sheet is dismissed
+                if !newValue, let url = tempFileURL {
+                    try? FileManager.default.removeItem(at: url)
+                    tempFileURL = nil
+                }
+            }
             .overlay(alignment: .bottom) {
                 if showUndoBanner, let last = lastDeletedPayment {
                     HStack(spacing: DesignSystem.Spacing.md) {
@@ -364,7 +372,12 @@ struct DashboardView: View {
         // Base date is the most recent payment date if available; otherwise today
         let baseDate = recent.last?.date ?? Date()
         let daysToAdd = periodsNeeded * avgIntervalDays
-        return Calendar.current.date(byAdding: .day, value: Int(daysToAdd), to: baseDate)
+        
+        // Prevent integer overflow by capping at Int.max
+        let safeDaysToAdd = min(daysToAdd, Double(Int.max))
+        guard safeDaysToAdd.isFinite else { return nil }
+        
+        return Calendar.current.date(byAdding: .day, value: Int(safeDaysToAdd), to: baseDate)
     }
 
     private func exportAudit() {
@@ -377,9 +390,11 @@ struct DashboardView: View {
             let filename = "Activity_\(Date().ISO8601Format()).json"
             let url = temporaryFileURL(fileName: filename)
             try data.write(to: url, options: .atomic)
+            tempFileURL = url // Store for cleanup
             shareItems = [url]
             isSharing = true
         } catch {
+            tempFileURL = nil // No file created, nothing to clean up
             let fallback = events.map { event in
                 let msg = event.message ?? event.kind.rawValue
                 return "\(event.date): \(msg)"
