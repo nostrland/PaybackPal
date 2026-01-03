@@ -1,0 +1,149 @@
+{
+  "" : {
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPal-primary.dia",
+    "emit-module-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPal-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPal-primary-emit-module.dia",
+    "pch" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPal-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPal-primary.swiftdeps"
+  },
+  "/Users/io/iOS-projects/PaybackPal/App/PaybackPalApp.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaybackPalApp~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/DesignSystem/DesignSystem.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DesignSystem~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Dashboard/DashboardView.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardView~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Dashboard/DashboardViewModel.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DashboardViewModel~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Dashboard/PaymentHistoryView.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentHistoryView~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Payments/PaymentEntryView.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentEntryView~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Reminders/ReminderScheduler.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderScheduler~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Features/Reminders/ReminderSetupView.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/ReminderSetupView~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Models/AuditEvent.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/AuditEvent~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Models/DebtData.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DebtData~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Models/Payment.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/Payment~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Persistence/PaymentsRepository.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/PaymentsRepository~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Utilities/CurrencyFormatter.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/CurrencyFormatter~partial.swiftmodule"
+  },
+  "/Users/io/iOS-projects/PaybackPal/Utilities/DateHelpers.swift" : {
+    "const-values" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.swiftconstvalues",
+    "dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.d",
+    "diagnostics" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.dia",
+    "index-unit-output-path" : "/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.o",
+    "llvm-bc" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.bc",
+    "object" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.o",
+    "swift-dependencies" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers.swiftdeps",
+    "swiftmodule" : "/Users/io/iOS-projects/build/Build/Intermediates.noindex/PaybackPal.build/Debug-iphoneos/PaybackPal.build/Objects-normal/arm64/DateHelpers~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,14 @@
+/Users/io/iOS-projects/PaybackPal/App/PaybackPalApp.swift
+/Users/io/iOS-projects/PaybackPal/Features/Dashboard/DashboardView.swift
+/Users/io/iOS-projects/PaybackPal/Features/Dashboard/DashboardViewModel.swift
+/Users/io/iOS-projects/PaybackPal/Features/Payments/PaymentEntryView.swift
+/Users/io/iOS-projects/PaybackPal/Features/Reminders/ReminderScheduler.swift
+/Users/io/iOS-projects/PaybackPal/Models/Payment.swift
+/Users/io/iOS-projects/PaybackPal/Features/Dashboard/PaymentHistoryView.swift
+/Users/io/iOS-projects/PaybackPal/Models/DebtData.swift
+/Users/io/iOS-projects/PaybackPal/Persistence/PaymentsRepository.swift
+/Users/io/iOS-projects/PaybackPal/Utilities/CurrencyFormatter.swift
+/Users/io/iOS-projects/PaybackPal/Models/AuditEvent.swift
+/Users/io/iOS-projects/PaybackPal/Utilities/DateHelpers.swift
+/Users/io/iOS-projects/PaybackPal/DesignSystem/DesignSystem.swift
+/Users/io/iOS-projects/PaybackPal/Features/Reminders/ReminderSetupView.swift
