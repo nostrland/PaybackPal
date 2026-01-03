@@ -4,6 +4,7 @@ import Foundation
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
     @State private var showPaymentEntry = false
+    @State private var lastDeletedPayment: Payment? = nil
 
     var body: some View {
         NavigationStack {
@@ -202,6 +203,7 @@ struct DashboardView: View {
                         } else {
                             ForEach(viewModel.recentPayments) { payment in
                                 PaymentRowView(payment: payment) {
+                                    lastDeletedPayment = payment
                                     viewModel.deletePayment(payment)
                                 }
                             }
@@ -218,6 +220,7 @@ struct DashboardView: View {
                         PaymentHistoryView(
                             payments: viewModel.recentPayments,
                             onDelete: { payment in
+                                lastDeletedPayment = payment
                                 viewModel.deletePayment(payment)
                             }
                         )
@@ -226,11 +229,25 @@ struct DashboardView: View {
                             .foregroundColor(DesignSystem.Colors.primary)
                     }
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    if let last = lastDeletedPayment {
+                        Button {
+                            // Re-add the last deleted amount as a new payment
+                            viewModel.addQuickPayment(last.amount)
+                            lastDeletedPayment = nil
+                        } label: {
+                            Label("Undo", systemImage: "arrow.uturn.backward")
+                                .foregroundColor(DesignSystem.Colors.primary)
+                        }
+                        .accessibilityLabel("Undo last delete")
+                    }
+                }
             }
             .sheet(isPresented: $showPaymentEntry) {
                 PaymentEntryView(repository: viewModel.repository)
             }
         }
+        .preferredColorScheme(.dark)
     }
 
     // MARK: - Helpers
