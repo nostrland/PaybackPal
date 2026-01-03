@@ -4,6 +4,7 @@ import Charts
 
 struct PaymentHistoryView: View {
     let payments: [Payment]
+    let payoffEstimate: Date?
     let onDelete: (Payment) -> Void
 
     @State private var filter: Filter = .all
@@ -40,6 +41,11 @@ struct PaymentHistoryView: View {
                             Text(CurrencyFormatter.shared.string(from: totalPaid))
                                 .font(DesignSystem.Typography.body)
                                 .fontWeight(.semibold)
+                            if let payoffEstimate {
+                                Text("Estimated payoff: \(formatPayoffDate(payoffEstimate))")
+                                    .font(DesignSystem.Typography.caption)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                         .padding(.vertical, DesignSystem.Spacing.sm)
                     }
@@ -220,6 +226,13 @@ struct PaymentHistoryView: View {
                 .foregroundColor(.secondary)
         }
         .padding(.top, DesignSystem.Spacing.xs)
+    }
+    
+    private func formatPayoffDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
     }
 }
 

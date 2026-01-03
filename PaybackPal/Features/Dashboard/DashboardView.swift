@@ -80,7 +80,7 @@ struct DashboardView: View {
 
                     // MARK: - Paycheck Slider
                     VStack(spacing: DesignSystem.Spacing.md) {
-                        Text("Paycheck payment amount")
+                        Text("Payment amount")
                             .font(DesignSystem.Typography.title)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
@@ -127,6 +127,16 @@ struct DashboardView: View {
 
                             if viewModel.debtData.paycheckPaymentAmount == 0 {
                                 Text("Bump this up to finish sooner")
+                                    .font(DesignSystem.Typography.caption)
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, DesignSystem.Spacing.lg)
+                            }
+                            
+                            if let estimate = computePayoffEstimateDate(
+                                balance: viewModel.currentBalance,
+                                payments: viewModel.recentPayments
+                            ) {
+                                Text("Estimated payoff: \(formatPayoffDate(estimate))")
                                     .font(DesignSystem.Typography.caption)
                                     .foregroundColor(.secondary)
                                     .padding(.horizontal, DesignSystem.Spacing.lg)
@@ -197,17 +207,6 @@ struct DashboardView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
-                        // Estimated payoff based on average of recent payments
-                        if let estimate = computePayoffEstimateDate(
-                            balance: viewModel.currentBalance,
-                            payments: viewModel.recentPayments
-                        ) {
-                            Text("Estimated payoff: \(formatPayoffDate(estimate))")
-                                .font(DesignSystem.Typography.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal, DesignSystem.Spacing.lg)
-                        }
-
                         if viewModel.recentPayments.isEmpty {
                             Text("No payments yet")
                                 .font(DesignSystem.Typography.caption)
@@ -234,6 +233,10 @@ struct DashboardView: View {
                     NavigationLink {
                         PaymentHistoryView(
                             payments: viewModel.recentPayments,
+                            payoffEstimate: computePayoffEstimateDate(
+                                balance: viewModel.currentBalance,
+                                payments: viewModel.recentPayments
+                            ),
                             onDelete: { payment in
                                 lastDeletedPayment = payment
                                 showUndoBanner = true
