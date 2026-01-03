@@ -52,8 +52,8 @@ final class DashboardViewModel: ObservableObject {
     // MARK: - Init
 
     init(
-        repository: PaymentsRepository = .shared,
-        reminderScheduler: ReminderScheduler = .shared
+        repository: PaymentsRepository,
+        reminderScheduler: ReminderScheduler
     ) {
         self.repository = repository
         self.reminderScheduler = reminderScheduler
@@ -72,6 +72,14 @@ final class DashboardViewModel: ObservableObject {
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
+    }
+
+    @MainActor
+    convenience init() {
+        self.init(
+            repository: .shared,
+            reminderScheduler: .shared
+        )
     }
 
     // MARK: - Payments

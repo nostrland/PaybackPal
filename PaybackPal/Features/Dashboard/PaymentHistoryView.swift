@@ -1,94 +1,225 @@
 import SwiftUI
 import Foundation
+import Charts
 
 struct PaymentHistoryView: View {
     let payments: [Payment]
     let onDelete: (Payment) -> Void
 
+    @State private var filter: Filter = .all
+
     var body: some View {
-        List {
-            ForEach(payments) { payment in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(CurrencyFormatter.shared.string(from: payment.amount))
-                        .font(.body)
-                        .fontWeight(.semibold)
-                    Text(formatDate(payment.date))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+        Group {
+            if filteredPayments.isEmpty {
+                ScrollView {
+                    VStack(spacing: DesignSystem.Spacing.md) {
+                        Text("Payment History")
+                            .font(DesignSystem.Typography.title)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, DesignSystem.Spacing.lg)
+                            .padding(.top, DesignSystem.Spacing.lg)
+
+                        filterControl
+                            .padding(.horizontal, DesignSystem.Spacing.lg)
+
+                        Text("No payments yet")
+                            .font(DesignSystem.Typography.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, DesignSystem.Spacing.lg)
+                            .frame(maxWidth: .infinity)
+                    }
                 }
-                .padding(.vertical, 4)
-            }
-            .onDelete { indexSet in
-                for index in indexSet {
-                    guard payments.indices.contains(index) else { continue }
-                    let payment = payments[index]
-                    onDelete(payment)
+            } else {
+                List {
+                    // Summary header
+                    Section {
+                        VStack(alignment: .leading, spacing: DesignSystem.Spacing.xs) {
+                            Text(filter == .all ? "Total Paid" : "Total Paid (This Month)")
+                                .font(DesignSystem.Typography.caption)
+                                .foregroundColor(.secondary)
+                            Text(CurrencyFormatter.shared.string(from: totalPaid))
+                                .font(DesignSystem.Typography.body)
+                                .fontWeight(.semibold)
+                        }
+                        .padding(.vertical, DesignSystem.Spacing.sm)
+                    }
+
+                    Section {
+                        Chart(monthlyTotalsForChart) { item in
+                            BarMark(
+                                x: .value("Month", item.label),
+                                y: .value("Total", NSDecimalNumber(decimal: item.total).doubleValue)
+                            )
+                            .foregroundStyle(DesignSystem.Colors.primary)
+                        }
+                        .chartYAxis {
+                            AxisMarks(position: .leading)
+                        }
+                        .frame(height: 140)
+                    }
+                    .headerProminence(.increased)
+
+                    // Filter control
+                    Section {
+                        filterControl
+                    }
+
+                    // Grouped sections by month/year (based on filteredPayments)
+                    ForEach(sortedSectionKeys, id: \.self) { key in
+                        Section(header: Text(key)
+                            .font(DesignSystem.Typography.caption)
+                            .foregroundColor(.secondary),
+                                footer: monthlyFooter(for: key)) {
+                            let items = sections[key] ?? []
+                            ForEach(items) { payment in
+                                PaymentRowView(payment: payment) {
+                                    onDelete(payment)
+                                }
+                                .listRowInsets(EdgeInsets(top: DesignSystem.Spacing.sm,
+                                                          leading: DesignSystem.Spacing.lg,
+                                                          bottom: DesignSystem.Spacing.sm,
+                                                          trailing: DesignSystem.Spacing.lg))
+                                .listRowBackground(Color.clear)
+                            }
+                            .onDelete { indexSet in
+                                let items = sections[key] ?? []
+                                for index in indexSet {
+                                    guard items.indices.contains(index) else { continue }
+                                    onDelete(items[index])
+                                }
+                            }
+                        }
+                    }
                 }
+                .listStyle(.insetGrouped)
             }
         }
         .navigationTitle("Payment History")
     }
 
-    private func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
-    }
-}
+    // MARK: - Filter
 
-#if DEBUG
-#Preview {
-    struct MockPayment: Identifiable {
-        let id: UUID
-        let amount: Decimal
-        let date: Date
+    private enum Filter: String, CaseIterable, Identifiable {
+        case all = "All"
+        case thisMonth = "This Month"
+        var id: String { rawValue }
     }
 
-    struct PreviewHost: View {
-        @State private var items: [MockPayment] = [
-            MockPayment(id: UUID(), amount: Decimal(50), date: Date()),
-            MockPayment(id: UUID(), amount: Decimal(75.5), date: Date().addingTimeInterval(-86400))
-        ]
-
-        var body: some View {
-            PaymentHistoryView(payments: items.map { payment in
-                // Map MockPayment to Payment if possible, else just use MockPayment in place of Payment
-                // Since Payment is unknown here, we type erase by casting to Payment via extension or create a dummy conversion.
-                // But as no Payment init known, we just cast to Payment via unsafe workaround not allowed.
-                // Instead, for preview, use MockPayment as Payment by a typealias somehow or just use MockPayment as Payment in the preview.
-                // The simplest is to define Payment as MockPayment only in preview:
-                // So, redefine Payment here as MockPayment to satisfy the interface.
-                // But we cannot redefine Payment in preview, so change PaymentHistoryView to accept generic Payment: Identifiable.
-                // That's not allowed per instruction.
-
-                // Instead, PaymentHistoryView requires Payment type, so we change payments property type to [MockPayment] only in preview by type erasing:
-
-                // Let's safely cast by type erasing:
-
-                // Just cast to Payment by force: (unsafe but for preview)
-                // But we can't do that here.
-
-                // So, we cheat by declaring Payment = MockPayment in DEBUG only (not allowed).
-
-                // Instead, just declare Payment as typealias to MockPayment inside DEBUG
-
-                // Since not allowed, instead, define a local Payment struct inside DEBUG that shadows original Payment.
-
-                fatalError("This line should never be reached")
-            }) { _ in }
+    private var filteredPayments: [Payment] {
+        switch filter {
+        case .all:
+            return payments
+        case .thisMonth:
+            let cal = Calendar.current
+            let now = Date()
+            let comps = cal.dateComponents([.year, .month], from: now)
+            guard let startOfMonth = cal.date(from: comps),
+                  let startOfNextMonth = cal.date(byAdding: DateComponents(month: 1), to: startOfMonth) else {
+                return payments
+            }
+            return payments.filter { $0.date >= startOfMonth && $0.date < startOfNextMonth }
         }
     }
 
-    // Workaround: shadow Payment type in DEBUG for preview
-    struct Payment: Identifiable {
-        let id: UUID
-        let amount: Decimal
-        let date: Date
+    @ViewBuilder
+    private var filterControl: some View {
+        Picker("Filter", selection: $filter) {
+            ForEach(Filter.allCases) { option in
+                Text(option.rawValue).tag(option)
+            }
+        }
+        .pickerStyle(.segmented)
     }
 
-    return NavigationStack {
-        PreviewHost()
+    // MARK: - Summary
+
+    private var totalPaid: Decimal {
+        filteredPayments.reduce(0) { $0 + $1.amount }
+    }
+
+    // MARK: - Grouping Helpers
+
+    private var sections: [String: [Payment]] {
+        let calendar = Calendar.current
+        var dict: [String: [Payment]] = [:]
+        for payment in filteredPayments {
+            let comps = calendar.dateComponents([.year, .month], from: payment.date)
+            let date = calendar.date(from: comps) ?? payment.date
+            let key = monthYearFormatter.string(from: date)
+            dict[key, default: []].append(payment)
+        }
+        // Sort each section by date descending
+        for (k, v) in dict {
+            dict[k] = v.sorted(by: { $0.date > $1.date })
+        }
+        return dict
+    }
+
+    private var sortedSectionKeys: [String] {
+        let formatter = monthYearFormatter
+        // Convert keys back to dates for sorting descending
+        let pairs: [(String, Date)] = sections.keys.compactMap { key in
+            if let date = formatter.date(from: key) { return (key, date) }
+            return nil
+        }
+        return pairs.sorted { $0.1 > $1.1 }.map { $0.0 }
+    }
+
+    private var monthYearFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateFormat = "LLLL yyyy" // e.g., January 2025
+        f.locale = Locale.current
+        return f
+    }
+
+    // MARK: - Chart Data
+
+    private struct MonthlyTotal: Identifiable {
+        let id = UUID()
+        let date: Date
+        let label: String
+        let total: Decimal
+    }
+
+    private var monthlyTotalsForChart: [MonthlyTotal] {
+        // Aggregate filteredPayments by month/year and produce up to the last 6 months sorted ascending for readable x-axis
+        let cal = Calendar.current
+        var totals: [Date: Decimal] = [:]
+        for p in filteredPayments {
+            let comps = cal.dateComponents([.year, .month], from: p.date)
+            let monthStart = cal.date(from: comps) ?? p.date
+            totals[monthStart, default: 0] += p.amount
+        }
+        let sorted = totals.keys.sorted(by: >)
+        let lastSix = Array(sorted.prefix(6)).sorted() // ascending for chart order
+        let df = monthShortFormatter
+        return lastSix.map { d in
+            MonthlyTotal(date: d, label: df.string(from: d), total: totals[d] ?? 0)
+        }
+    }
+
+    private var monthShortFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateFormat = "LLL" // Jan, Feb, ...
+        f.locale = Locale.current
+        return f
+    }
+
+    // MARK: - Footers
+
+    private func monthlyFooter(for key: String) -> some View {
+        let items = sections[key] ?? []
+        let subtotal: Decimal = items.reduce(0) { $0 + $1.amount }
+        return HStack {
+            Text("Subtotal")
+                .font(DesignSystem.Typography.caption)
+                .foregroundColor(.secondary)
+            Spacer()
+            Text(CurrencyFormatter.shared.string(from: subtotal))
+                .font(DesignSystem.Typography.caption)
+                .foregroundColor(.secondary)
+        }
+        .padding(.top, DesignSystem.Spacing.xs)
     }
 }
-#endif
+

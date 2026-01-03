@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
@@ -9,7 +10,7 @@ struct DashboardView: View {
             ScrollView {
                 VStack(spacing: DesignSystem.Spacing.xl) {
 
-                    // Balance Section
+                    // MARK: - Balance Section
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Owed Balance")
                             .font(DesignSystem.Typography.body)
@@ -33,7 +34,7 @@ struct DashboardView: View {
                     }
                     .padding(.top, DesignSystem.Spacing.xl)
 
-                    // Quick Payment Buttons
+                    // MARK: - Quick Payment Buttons
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Quick Payment")
                             .font(DesignSystem.Typography.title)
@@ -41,14 +42,22 @@ struct DashboardView: View {
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
                         HStack(spacing: DesignSystem.Spacing.md) {
-                            QuickPaymentButton(amount: 20) { viewModel.addQuickPayment(20) }
-                            QuickPaymentButton(amount: 50) { viewModel.addQuickPayment(50) }
+                            QuickPaymentButton(amount: 20) {
+                                viewModel.addQuickPayment(20)
+                            }
+                            QuickPaymentButton(amount: 50) {
+                                viewModel.addQuickPayment(50)
+                            }
                         }
                         .padding(.horizontal, DesignSystem.Spacing.lg)
 
                         HStack(spacing: DesignSystem.Spacing.md) {
-                            QuickPaymentButton(amount: 100) { viewModel.addQuickPayment(100) }
-                            QuickPaymentButton(amount: 200) { viewModel.addQuickPayment(200) }
+                            QuickPaymentButton(amount: 100) {
+                                viewModel.addQuickPayment(100)
+                            }
+                            QuickPaymentButton(amount: 200) {
+                                viewModel.addQuickPayment(200)
+                            }
                         }
                         .padding(.horizontal, DesignSystem.Spacing.lg)
 
@@ -66,7 +75,7 @@ struct DashboardView: View {
                         .padding(.horizontal, DesignSystem.Spacing.lg)
                     }
 
-                    // Paycheck Payment Slider
+                    // MARK: - Paycheck Slider
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Paycheck payment amount")
                             .font(DesignSystem.Typography.title)
@@ -81,9 +90,13 @@ struct DashboardView: View {
 
                                 Spacer()
 
-                                Text(CurrencyFormatter.shared.string(from: viewModel.debtData.paycheckPaymentAmount))
-                                    .font(DesignSystem.Typography.body)
-                                    .fontWeight(.semibold)
+                                Text(
+                                    CurrencyFormatter.shared.string(
+                                        from: viewModel.debtData.paycheckPaymentAmount
+                                    )
+                                )
+                                .font(DesignSystem.Typography.body)
+                                .fontWeight(.semibold)
 
                                 Spacer()
 
@@ -95,8 +108,14 @@ struct DashboardView: View {
 
                             Slider(
                                 value: Binding(
-                                    get: { viewModel.debtData.paycheckPaymentAmount.doubleValue },
-                                    set: { viewModel.updatePaycheckAmount(Decimal($0)) }
+                                    get: {
+                                        NSDecimalNumber(
+                                            decimal: viewModel.debtData.paycheckPaymentAmount
+                                        ).doubleValue
+                                    },
+                                    set: {
+                                        viewModel.updatePaycheckAmount(Decimal($0))
+                                    }
                                 ),
                                 in: 0...500,
                                 step: 10
@@ -112,7 +131,7 @@ struct DashboardView: View {
                         }
                     }
 
-                    // Reminders Section
+                    // MARK: - Reminders Section
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Reminders")
                             .font(DesignSystem.Typography.title)
@@ -160,13 +179,15 @@ struct DashboardView: View {
                             .padding(.horizontal, DesignSystem.Spacing.lg)
                         }
 
-                        Text("Reminders scheduled: \(viewModel.remindersScheduled ? "Yes" : "No")")
-                            .font(DesignSystem.Typography.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal, DesignSystem.Spacing.lg)
+                        Text(
+                            "Reminders scheduled: \(viewModel.remindersScheduled ? "Yes" : "No")"
+                        )
+                        .font(DesignSystem.Typography.caption)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, DesignSystem.Spacing.lg)
                     }
 
-                    // Recent Payments
+                    // MARK: - Recent Payments
                     VStack(spacing: DesignSystem.Spacing.md) {
                         Text("Recent Payments")
                             .font(DesignSystem.Typography.title)
@@ -212,6 +233,8 @@ struct DashboardView: View {
         }
     }
 
+    // MARK: - Helpers
+
     private func formatPayoffDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -219,6 +242,8 @@ struct DashboardView: View {
         return formatter.string(from: date)
     }
 }
+
+// MARK: - Subviews
 
 struct QuickPaymentButton: View {
     let amount: Decimal

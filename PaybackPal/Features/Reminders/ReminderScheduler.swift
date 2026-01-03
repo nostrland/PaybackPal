@@ -100,24 +100,28 @@ final class ReminderScheduler: ObservableObject {
 
 private extension UNUserNotificationCenter {
     func notificationSettings() async -> UNNotificationSettings {
-        await withCheckedContinuation { continuation in
-            getNotificationSettings { continuation.resume(returning: $0) }
+        await withCheckedContinuation { (continuation: CheckedContinuation<UNNotificationSettings, Never>) in
+            getNotificationSettings { settings in
+                continuation.resume(returning: settings)
+            }
         }
     }
 
     func pendingNotificationRequests() async -> [UNNotificationRequest] {
-        await withCheckedContinuation { continuation in
-            getPendingNotificationRequests { continuation.resume(returning: $0) }
+        await withCheckedContinuation { (continuation: CheckedContinuation<[UNNotificationRequest], Never>) in
+            getPendingNotificationRequests { requests in
+                continuation.resume(returning: requests)
+            }
         }
     }
 
     func add(_ request: UNNotificationRequest) async throws {
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             add(request) { error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else {
-                    continuation.resume()
+                    continuation.resume(returning: ())
                 }
             }
         }
