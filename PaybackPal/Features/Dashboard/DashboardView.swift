@@ -167,17 +167,23 @@ struct DashboardView: View {
                                 .foregroundColor(.secondary)
                                 .padding(.vertical, DesignSystem.Spacing.lg)
                         } else {
-                            ForEach(viewModel.recentPayments) { payment in
-                                PaymentRowView(payment: payment) {
-                                    lastDeletedPayment = payment
-                                    showUndoBanner = true
-                                    scheduleUndoAutoHide()
-                                    withAnimation { viewModel.deletePayment(payment) }
+                            List {
+                                ForEach(viewModel.recentPayments) { payment in
+                                    PaymentRowView(payment: payment) {
+                                        lastDeletedPayment = payment
+                                        showUndoBanner = true
+                                        scheduleUndoAutoHide()
+                                        withAnimation { viewModel.deletePayment(payment) }
+                                    }
+                                    .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                                    .listRowSeparator(.hidden)
+                                    .listRowBackground(Color.clear)
                                 }
-                                .transition(.move(edge: .trailing).combined(with: .opacity))
                             }
+                            .listStyle(.plain)
+                            .frame(height: CGFloat(viewModel.recentPayments.count) * 80)
+                            .scrollDisabled(true)
                             .padding(.horizontal, DesignSystem.Spacing.lg)
-                            .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.recentPayments)
                         }
                     }
                     .padding(.bottom, DesignSystem.Spacing.xl)
