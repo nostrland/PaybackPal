@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>PaybackPal sends payment reminders on your biweekly payday schedule to help you stay on track with debt repayment.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -11,8 +13,5 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>PaybackPal sends payment reminders on your biweekly payday schedule to help you stay on track with debt repayment.</string>
 </dict>
 </plist>
-

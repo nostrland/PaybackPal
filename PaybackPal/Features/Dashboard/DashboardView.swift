@@ -11,6 +11,8 @@ struct DashboardView: View {
     @State private var isSharing = false
     @State private var shareItems: [Any] = []
     @State private var tempFileURL: URL? = nil
+    @State private var showReminderSetup = false
+    @State private var showFirstTimeReminderPrompt = false
 
     var body: some View {
         NavigationStack {
@@ -149,63 +151,6 @@ struct DashboardView: View {
                         }
                     }
 
-                    // MARK: - Reminders Section
-                    VStack(spacing: DesignSystem.Spacing.md) {
-                        Text("Reminders")
-                            .font(DesignSystem.Typography.title)
-                            .textCase(.uppercase)
-                            .tracking(0.5)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, DesignSystem.Spacing.lg)
-
-                        if !viewModel.hasNotificationPermission {
-                            Button {
-                                viewModel.requestNotificationPermission()
-                            } label: {
-                                Text("Enable Notifications")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, DesignSystem.Spacing.md)
-                                    .background(DesignSystem.Colors.primary)
-                                    .cornerRadius(12)
-                            }
-                            .padding(.horizontal, DesignSystem.Spacing.lg)
-                        } else {
-                            Button {
-                                viewModel.scheduleReminders()
-                            } label: {
-                                Text("Schedule biweekly payday reminder")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, DesignSystem.Spacing.md)
-                                    .background(DesignSystem.Colors.primary)
-                                    .cornerRadius(12)
-                            }
-                            .padding(.horizontal, DesignSystem.Spacing.lg)
-
-                            Button {
-                                viewModel.clearReminders()
-                            } label: {
-                                Text("Clear scheduled reminders")
-                                    .font(.headline)
-                                    .foregroundColor(DesignSystem.Colors.danger)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, DesignSystem.Spacing.md)
-                                    .background(Color(.systemGray6))
-                                    .cornerRadius(12)
-                            }
-                            .padding(.horizontal, DesignSystem.Spacing.lg)
-                        }
-
-                        Text(
-                            "Reminders scheduled: \(viewModel.remindersScheduled ? "Yes" : "No")"
-                        )
-                        .font(DesignSystem.Typography.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, DesignSystem.Spacing.lg)
-                    }
 
                     // MARK: - Recent Payments
                     VStack(spacing: DesignSystem.Spacing.md) {
@@ -241,29 +186,55 @@ struct DashboardView: View {
             .navigationTitle("PaybackPal")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        PaymentHistoryView(
-                            payments: viewModel.recentPayments,
-                            payoffEstimate: computePayoffEstimateDate(
-                                balance: viewModel.currentBalance,
-                                payments: viewModel.recentPayments
-                            ),
-                            onDelete: { payment in
-                                lastDeletedPayment = payment
-                                showUndoBanner = true
-                                scheduleUndoAutoHide()
-                                withAnimation { viewModel.deletePayment(payment) }
-                            }
-                        )
-                    } label: {
-                        Label("History", systemImage: "clock")
-                            .symbolRenderingMode(.hierarchical)
-                            .foregroundColor(DesignSystem.Colors.primary)
+                    HStack(spacing: DesignSystem.Spacing.md) {
+                        Button {
+                            showReminderSetup = true
+                        } label: {
+                            Image(systemName: "bell")
+                                .foregroundColor(DesignSystem.Colors.primary)
+                        }
+                        
+                        NavigationLink {
+                            PaymentHistoryView(
+                                payments: viewModel.recentPayments,
+                                payoffEstimate: computePayoffEstimateDate(
+                                    balance: viewModel.currentBalance,
+                                    payments: viewModel.recentPayments
+                                ),
+                                onDelete: { payment in
+                                    lastDeletedPayment = payment
+                                    showUndoBanner = true
+                                    scheduleUndoAutoHide()
+                                    withAnimation { viewModel.deletePayment(payment) }
+                                }
+                            )
+                        } label: {
+                            Label("History", systemImage: "clock")
+                                .symbolRenderingMode(.hierarchical)
+                                .foregroundColor(DesignSystem.Colors.primary)
+                        }
                     }
                 }
             }
             .sheet(isPresented: $showPaymentEntry) {
                 PaymentEntryView(repository: viewModel.repository)
+            }
+            .sheet(isPresented: $showReminderSetup) {
+                ReminderSetupView(reminderScheduler: viewModel.reminderScheduler)
+            }
+            .alert("Set Up Payment Reminders?", isPresented: $showFirstTimeReminderPrompt) {
+                Button("Not Now", role: .cancel) {
+                    UserDefaults.standard.set(true, forKey: "hasSeenReminderPrompt")
+                }
+                Button("Set Up") {
+                    UserDefaults.standard.set(true, forKey: "hasSeenReminderPrompt")
+                    showReminderSetup = true
+                }
+            } message: {
+                Text("Get notified every two weeks on your payday to help you stay on track with payments.")
+            }
+            .onAppear {
+                checkFirstTimeLaunch()
             }
             .sheet(isPresented: $isSharing) {
                 ShareSheet(activityItems: shareItems)
@@ -326,6 +297,16 @@ struct DashboardView: View {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter.string(from: date)
+    }
+    
+    private func checkFirstTimeLaunch() {
+        let hasSeenPrompt = UserDefaults.standard.bool(forKey: "hasSeenReminderPrompt")
+        if !hasSeenPrompt {
+            // Delay slightly to ensure view is fully loaded
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showFirstTimeReminderPrompt = true
+            }
+        }
     }
 
     private func computePayoffEstimateDate(balance: Decimal, payments: [Payment]) -> Date? {
