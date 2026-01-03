@@ -54,8 +54,8 @@ struct DashboardView: View {
                             QuickPaymentButton(amount: 20) {
                                 withAnimation { viewModel.addQuickPayment(20) }
                             }
-                            QuickPaymentButton(amount: 50) {
-                                withAnimation { viewModel.addQuickPayment(50) }
+                            QuickPaymentButton(amount: 55.55) {
+                                withAnimation { viewModel.addQuickPayment(55.55) }
                             }
                         }
                         .padding(.horizontal, DesignSystem.Spacing.lg)
@@ -86,7 +86,7 @@ struct DashboardView: View {
 
                     // MARK: - Paycheck Slider
                     VStack(spacing: DesignSystem.Spacing.md) {
-                        Text("Payment amount")
+                        Text("Biweekly payment (for estimate)")
                             .font(DesignSystem.Typography.title)
                             .textCase(.uppercase)
                             .tracking(0.5)
