@@ -305,29 +305,35 @@ struct DashboardView: View {
     }
 
     private func computePayoffEstimateDate(balance: Decimal, payments: [Payment]) -> Date? {
-        // Need at least one positive payment and a positive balance
+        // Require a positive balance and at least one payment
         guard balance > 0, !payments.isEmpty else { return nil }
 
-        // Sort payments by date ascending
+        // Sort payments by date ascending and focus on only the most recent few payments
         let sorted = payments.sorted { $0.date < $1.date }
+        let windowSize = 5 // consider the last up to 5 payments
+        let recent = Array(sorted.suffix(windowSize))
 
-        // Average payment amount (consider only positive amounts)
-        let amounts = sorted.map { max($0.amount, 0) }
-        let total = amounts.reduce(Decimal(0), +)
-        let count = Decimal(amounts.count)
-        guard count > 0 else { return nil }
+        // Average payment amount; use absolute values to support negative-recorded payments
+        let amounts: [Decimal] = recent.map { payment in
+            let amt = payment.amount
+            return amt >= 0 ? amt : -amt
+        }
+        let positiveAmounts = amounts.filter { $0 > 0 }
+        guard !positiveAmounts.isEmpty else { return nil }
+        let total = positiveAmounts.reduce(Decimal(0), +)
+        let count = Decimal(positiveAmounts.count)
         let avgPayment = total / count
         guard avgPayment > 0 else { return nil }
 
-        // Average interval in days between payments; default to 14 days if not enough data
+        // Average interval in days between the recent payments; default to 14 days if only one
         let avgIntervalDays: Double
-        if sorted.count >= 2 {
+        if recent.count >= 2 {
             var intervals: [TimeInterval] = []
-            for i in 1..<sorted.count {
-                intervals.append(sorted[i].date.timeIntervalSince(sorted[i - 1].date))
+            for i in 1..<recent.count {
+                intervals.append(recent[i].date.timeIntervalSince(recent[i - 1].date))
             }
             let avgInterval = intervals.reduce(0, +) / Double(intervals.count)
-            // Convert seconds to days, ensure at least 1 day to avoid zero/negative
+            // Convert seconds to days; clamp to at least 1 day
             avgIntervalDays = max(avgInterval / 86_400.0, 1.0)
         } else {
             avgIntervalDays = 14.0
@@ -339,8 +345,8 @@ struct DashboardView: View {
         guard avgPay > 0 else { return nil }
         let periodsNeeded = ceil(remaining / avgPay)
 
-        // Base date: last payment date if available, else today
-        let baseDate = sorted.last?.date ?? Date()
+        // Base date is the most recent payment date if available; otherwise today
+        let baseDate = recent.last?.date ?? Date()
         let daysToAdd = periodsNeeded * avgIntervalDays
         return Calendar.current.date(byAdding: .day, value: Int(daysToAdd), to: baseDate)
     }
