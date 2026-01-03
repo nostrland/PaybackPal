@@ -22,18 +22,6 @@ struct DashboardView: View {
                         Text(CurrencyFormatter.shared.string(from: viewModel.currentBalance))
                             .font(DesignSystem.Typography.largeBalance)
                             .foregroundColor(.primary)
-
-                        if let payoffDate = viewModel.estimatedPayoffDate {
-                            Text("Estimated payoff: \(formatPayoffDate(payoffDate))")
-                                .font(DesignSystem.Typography.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.top, DesignSystem.Spacing.sm)
-                        } else {
-                            Text("No payoff estimate")
-                                .font(DesignSystem.Typography.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.top, DesignSystem.Spacing.sm)
-                        }
                     }
                     .padding(.top, DesignSystem.Spacing.xl)
 
@@ -125,7 +113,12 @@ struct DashboardView: View {
                             )
                             .padding(.horizontal, DesignSystem.Spacing.lg)
 
-                            if viewModel.debtData.paycheckPaymentAmount == 0 {
+                            if let payoffDate = viewModel.estimatedPayoffDate {
+                                Text("Estimated payoff: \(formatPayoffDate(payoffDate))")
+                                    .font(DesignSystem.Typography.caption)
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, DesignSystem.Spacing.lg)
+                            } else {
                                 Text("Bump this up to finish sooner")
                                     .font(DesignSystem.Typography.caption)
                                     .foregroundColor(.secondary)

@@ -37,6 +37,7 @@
 		AA0000180000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA0000190000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C913B9F92F08972900E11C98 /* PaymentHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentHistoryView.swift; sourceTree = "<group>"; };
+		C9DB78942F09AF3B008AEB41 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,7 @@
 			children = (
 				AA00001C0000000000000001 /* PaybackPal */,
 				AA00001D0000000000000001 /* Products */,
+				C9DB78942F09AF3B008AEB41 /* AppIconView.swift */,
 			);
 			sourceTree = "<group>";
 		};
