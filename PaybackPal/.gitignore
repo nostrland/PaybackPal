@@ -4,6 +4,8 @@
 
 ## User settings
 xcuserdata/
+*.xcuserstate
+*.xcuserdatad
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
@@ -29,41 +31,28 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
+*.app.dSYM
+*.app
 
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
 
 # Swift Package Manager
-#
-# Add this line if you want to avoid checking in source code from Swift Package Manager's dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
-# *.xcodeproj
-#
-# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
-# hence it is not needed unless you have added a package configuration file to your project
-# .swiftpm
-
 .build/
+.swiftpm/
+Packages/
+Package.pins
+Package.resolved
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
 
 # CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-# Pods/
-#
-# Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
+Pods/
+*.xcworkspace
+!default.xcworkspace
 
 # Carthage
-#
-# Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
+Carthage/Checkouts
 Carthage/Build/
 
 # Accio dependency management
@@ -71,24 +60,286 @@ Dependencies/
 .accio/
 
 # fastlane
-#
-# It is recommended to not store the screenshots in the git repo.
-# Instead, use fastlane to re-generate the screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/#source-control
-
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+fastlane/.env
 
 # Code Injection
-#
-# After new code Injection tools there's a generated folder /iOSInjectionProject
-# https://github.com/johnno1962/injectionforxcode
-
 iOSInjectionProject/
 
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
+# Security & Secrets - CRITICAL: Never commit these!
+*.p12
+*.mobileprovision
+*.certSigningRequest
+*.cer
+*.key
+*.pem
+*.cert
+*.keystore
+*.jks
+*.pfx
+
+# API Keys & Secrets
+*.apikey
+*.secret
+*.env
+*.env.local
+*.env.*.local
+secrets.plist
+Secrets.plist
+APIKeys.plist
+Config.plist
+config.plist
+*.secrets
+secrets.json
+config.json
+credentials.json
+*.credentials
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# Backup files
+*~
+*.swp
+*.swo
+*.bak
+*.backup
+*.tmp
+*.temp
+*_backup
+*_backup_*
+*.orig
+
+# Logs
+*.log
+logs/
+*.log.*
+*.logfile
+crashlytics.log
+crashlytics-build.log
+
+# Test coverage
+*.gcda
+*.gcno
+*.profdata
+coverage/
+*.coverage
+.xccoverage/
+htmlcov/
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# IDE - Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+!*.xcworkspace/xcshareddata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+*.xcscmblueprint
+*.xccheckout
+*.xcuserstate
+*.xcuserdatad
+*.xcscmblueprint
+*.xccheckout
+
+# IDE - AppCode
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDE - Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+.netrwhist
+tags
+[._]*.un~
+
+# IDE - Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# App Store Connect / TestFlight
+*.app.dSYM.zip
+*.app.dSYM
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Certificates & Provisioning Profiles
+*.mobileprovision
+*.provisionprofile
+*.certSigningRequest
+*.cer
+*.p12
+*.cert
+*.key
+*.pem
+*.keystore
+*.jks
+*.pfx
+
+# Firebase
+GoogleService-Info.plist
+google-services.json
+firebase_options.dart
+
+# Crashlytics
+crashlytics-build.properties
+crashlytics.properties
+
+# App Store Connect API Key
+AuthKey_*.p8
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Documentation
+docs/_build/
+site/
+
+# Python (if using scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Node (if using scripts)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Ruby (if using scripts)
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+.bundle/
+vendor/bundle
+lib/bundler/man/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.realm
+*.db-shm
+*.db-wal
+
+# Compressed files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
+
+# Local configuration files
+local.properties
+local_config.plist
+LocalConfig.plist
+
+# Generated files
+*.generated.swift
+Generated/
+generated/
+
+# Linting
+.swiftlint.yml
+.swiftlintcache
+
+# Pre-commit hooks
+.pre-commit-config.yaml
+
+# Package manager lock files (uncomment if you want to ignore)
+# Package.resolved
+# Podfile.lock
